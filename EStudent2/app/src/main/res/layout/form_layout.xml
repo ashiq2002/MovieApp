@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/idInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="36dp"
+                android:hint="@string/id"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/sId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nameInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="36dp"
+                android:hint="@string/name"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="@+id/idInputLayout"
+                app:layout_constraintStart_toStartOf="@+id/idInputLayout"
+                app:layout_constraintTop_toBottomOf="@+id/idInputLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/sName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ageInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="36dp"
+                android:hint="@string/age"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="@+id/nameInputLayout"
+                app:layout_constraintStart_toStartOf="@+id/nameInputLayout"
+                app:layout_constraintTop_toBottomOf="@+id/nameInputLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/sAge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/departmentInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="36dp"
+                android:hint="@string/department"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="@+id/ageInputLayout"
+                app:layout_constraintStart_toStartOf="@+id/ageInputLayout"
+                app:layout_constraintTop_toBottomOf="@+id/ageInputLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/sDepartment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/semesterInputLayout5"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="36dp"
+                android:hint="@string/semester"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="@+id/departmentInputLayout"
+                app:layout_constraintStart_toStartOf="@+id/departmentInputLayout"
+                app:layout_constraintTop_toBottomOf="@+id/departmentInputLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/semester"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

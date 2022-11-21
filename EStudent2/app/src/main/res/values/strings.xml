@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">E-Student</string>
+    <string name="enter_name_please">Enter name please</string>
+    <string name="name">Name</string>
+    <string name="age">Age</string>
+    <string name="password">Password</string>
+    <string name="id">Id</string>
+    <string name="department">Department</string>
+    <string name="semester">Semester</string>
+    <string name="submit">Submit</string>
+    <string name="adding_student">Adding Student</string>
+    <string name="_id">Id :</string>
+    <string name="_name">Name :</string>
+    <string name="_age">Age :</string>
+    <string name="_department">Department : </string>
+    <string name="update">Update</string>
+    <string name="update_data">Update Data</string>
+</resources>

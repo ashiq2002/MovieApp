@@ -17,7 +17,8 @@ import java.util.Calendar;
 
 public class AddTaskActivity extends AppCompatActivity {
     ActivityAddTaskBinding binding;
-    String status = "";
+    DatabaseHelper databaseHelper;
+    public String status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +26,13 @@ public class AddTaskActivity extends AppCompatActivity {
         binding = ActivityAddTaskBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        databaseHelper = DatabaseHelper.getInstance(getApplicationContext());
+
         binding.taskStartTime.setOnClickListener(v->timeDialog(0, "Select Start Time"));
         binding.taskEndTime.setOnClickListener(v-> timeDialog(1, "Select End Time"));
         statusAdapter();
-        binding.submitData.setOnClickListener(v-> insertTask());
+
+        insert();
     }
 
 //    @SuppressLint("SetTextI18n")
@@ -75,29 +79,35 @@ public class AddTaskActivity extends AppCompatActivity {
 
     //set status spinner adapter
     private void statusAdapter(){
-        StatusAdapter adapter = new StatusAdapter(AddTaskActivity.this, new String[]{"Running", "Pending", "Complete"});
+        StatusAdapter adapter = new StatusAdapter(AddTaskActivity.this, new String[]{"","Running", "Pending", "Complete"});
         binding.spinner.setAdapter(adapter);
     }
 
     //insert data into task database
-    private void insertTask(){
-//        String title, description, status, sTime, eTime;
-//        title = binding.taskTitle.getText().toString();
-//        description = binding.taskDescription.getText().toString();
-//        status = getStatus();
-//        sTime = binding.taskStartTime.getText().toString();
-//        eTime = binding.taskEndTime.getText().toString();
-        DatabaseHelper databaseHelper = DatabaseHelper.getInstance(getApplicationContext());
-        databaseHelper.getTaskDao().insertTask(new TaskModel("Code", "Android", "Running", "12:45 am", "12: 55 pm"));
+    private void insertTask(String status){
+        String title, description, sTime, eTime;
+        title = binding.taskTitle.getText().toString();
+        description = binding.taskDescription.getText().toString();
+        sTime = binding.taskStartTime.getText().toString();
+        eTime = binding.taskEndTime.getText().toString();
 
+        binding.submitData.setOnClickListener(v->{
+            databaseHelper.getTaskDao().insertTask(new TaskModel(title, description, status, sTime, eTime));
+            binding.taskTitle.setText("");
+            binding.taskDescription.setText("");
+            binding.taskStartTime.setText("");
+            binding.taskEndTime.setText("");
+        });
     }
 
-    //get status selected item
-    private String getStatus(){
+    //set status selected item
+    private void insert(){
         binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 status = parent.getItemAtPosition(position).toString();
+                if(!status.trim().isEmpty())
+                insertTask(status);
             }
 
             @Override
@@ -105,12 +115,16 @@ public class AddTaskActivity extends AppCompatActivity {
 
             }
         });
-        return status;
+
     }
 
+
     //is edit text value null
-    private boolean isNull(){
-        return false;
+    private boolean isNull(String[] item){
+        return (item[0].trim().isEmpty()
+                && item[1].trim().isEmpty()
+                && item[2].trim().isEmpty()
+                && item[3].trim().isEmpty());
     }
 
     @Override

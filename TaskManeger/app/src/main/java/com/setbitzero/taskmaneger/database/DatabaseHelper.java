@@ -15,7 +15,7 @@ public abstract class DatabaseHelper extends RoomDatabase {
 
     public static synchronized DatabaseHelper getInstance(Context context){
         return instance == null? instance =
-                Room.databaseBuilder(context, DatabaseHelper.class, "task_db.db")
+                Room.databaseBuilder(context, DatabaseHelper.class, "task_db")
                         .fallbackToDestructiveMigration()
                         .allowMainThreadQueries()
                         .build():

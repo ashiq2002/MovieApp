@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#3D72DE"
-    tools:context=".fragments.AddTaskFragment">
+    tools:context=".fragments.UpdateTaskFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -55,19 +55,28 @@
                 app:layout_constraintTop_toBottomOf="@+id/taskTitle"
                 tools:ignore="RtlHardcoded" />
 
-            <EditText
-                android:id="@+id/taskDate"
-                android:layout_width="120dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="6dp"
-                android:layout_marginTop="25dp"
-                android:autofillHints=""
-                android:hint="@string/mm_dd_yyyy"
-                android:inputType="datetime"
-                app:layout_constraintEnd_toEndOf="@+id/taskDescription"
-                app:layout_constraintHorizontal_bias="0.0"
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:text="@string/strat_time_end_time"
+                android:textColor="#96CAA4A4"
+                android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="@+id/taskDescription"
                 app:layout_constraintTop_toBottomOf="@+id/taskDescription" />
+
+            <EditText
+                android:id="@+id/taskStartTime"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:autofillHints=""
+                android:hint="@string/hh_mm_ss"
+                android:inputType="time"
+                app:layout_constraintEnd_toEndOf="@+id/textView"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/textView"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
 
             <View
                 android:id="@+id/view"
@@ -75,21 +84,21 @@
                 android:layout_height="25dp"
                 android:layout_marginTop="7dp"
                 android:background="@drawable/line"
-                app:layout_constraintBottom_toBottomOf="@+id/taskDate"
-                app:layout_constraintStart_toEndOf="@+id/taskDate"
-                app:layout_constraintTop_toTopOf="@+id/taskDate" />
+                app:layout_constraintBottom_toBottomOf="@+id/taskStartTime"
+                app:layout_constraintStart_toEndOf="@+id/taskStartTime"
+                app:layout_constraintTop_toTopOf="@+id/taskStartTime" />
 
             <EditText
-                android:id="@+id/taskTime"
+                android:id="@+id/taskEndTime"
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="22dp"
                 android:hint="@string/hh_mm_ss"
                 android:importantForAutofill="no"
-                android:inputType="datetime"
+                android:inputType="time"
                 android:padding="10dp"
                 app:layout_constraintBottom_toBottomOf="@+id/view"
-                app:layout_constraintStart_toEndOf="@+id/taskDate"
+                app:layout_constraintStart_toEndOf="@+id/taskStartTime"
                 app:layout_constraintTop_toTopOf="@+id/view"
                 app:layout_constraintVertical_bias="0.64" />
 
@@ -99,8 +108,8 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="25dp"
                 android:background="@drawable/spinner_bg"
-                app:layout_constraintStart_toStartOf="@+id/taskDate"
-                app:layout_constraintTop_toBottomOf="@+id/taskDate" />
+                app:layout_constraintStart_toStartOf="@+id/taskStartTime"
+                app:layout_constraintTop_toBottomOf="@+id/taskStartTime" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/submitData"

@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity{
     public void onBackPressed() {
         super.onBackPressed();
         binding.navigationBar.setVisibility(View.VISIBLE);
-        binding.cardView.setVisibility(View.VISIBLE);
+        binding.topBar.setVisibility(View.VISIBLE);
     }
 
 }

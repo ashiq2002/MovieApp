@@ -16,5 +16,8 @@
     <string name="hh_mm_ss">HH:MM:SS</string>
     <string name="strat_time_end_time">Start time / End time</string>
     <string name="xxxxx">XXXXX</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="image_button">image button</string>
 
 </resources>

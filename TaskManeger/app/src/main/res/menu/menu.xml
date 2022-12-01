@@ -13,7 +13,7 @@
 
     <item
         android:id="@+id/pendingTask"
-        android:title="@string/running"
+        android:title="@string/pending"
         android:icon="@drawable/ic_pending"/>
 
     <item

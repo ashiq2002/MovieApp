@@ -1,8 +1,12 @@
 package com.setbitzero.taskmaneger.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -10,19 +14,27 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.core.os.BundleKt;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.setbitzero.taskmaneger.R;
+import com.setbitzero.taskmaneger.database.DatabaseHelper;
 import com.setbitzero.taskmaneger.databinding.ItemBinding;
+import com.setbitzero.taskmaneger.fragments.UpdateTaskFragment;
+import com.setbitzero.taskmaneger.model.TaskModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder>{
+    DatabaseHelper databaseHelper;
     Context context;
-    ArrayList<String> list;
+    List<TaskModel> list;
 
-    public CustomAdapter(Context context, ArrayList<String> list) {
+    public CustomAdapter(Context context, List<TaskModel> list) {
         this.context = context;
         this.list = list;
     }
@@ -36,28 +48,19 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.binding.item.setText(list.get(position));
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(context,
-                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                new String[]{"","Update", "Delete", "Complete"});
+        holder.binding.itemTitle.setText(list.get(position).getTitle());
+        holder.binding.itemDescription.setText(list.get(position).getDescription());
+        holder.binding.startTime.setText(String.format("Start : %s", list.get(position).getStartTime()));
+        holder.binding.endTime.setText(String.format("End : %s", list.get(position).getEndTime()));
 
-        holder.binding.itemAction.setAdapter(adapter);
+        if(list.get(position).getStatus().equalsIgnoreCase("pending"))
+            holder.binding.taskIcon.setImageResource(R.drawable.ic_pending);
+        else if(list.get(position).getStatus().equalsIgnoreCase("running"))
+            holder.binding.taskIcon.setImageResource(R.drawable.ic_running);
+        else if(list.get(position).getStatus().equalsIgnoreCase("complete"))
+            holder.binding.taskIcon.setImageResource(R.drawable.ic_complete);
 
-        holder.binding.itemAction.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItem = parent.getItemAtPosition(position).toString();
-
-                if(selectedItem.equals("Update")){
-                    Navigation.findNavController((Activity) context, R.id.nav_controller).navigate(R.id.notificationFragment);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        holder.binding.itemAction.setOnClickListener(v-> showPopupMenu(holder, position));
     }
 
     @Override
@@ -72,5 +75,44 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             super(binding.getRoot());
             this.binding = binding;
         }
+
     }
+
+    @SuppressLint({"NonConstantResourceId", "NotifyDataSetChanged"})
+    private void showPopupMenu(@NonNull ViewHolder holder, int position){
+        databaseHelper = DatabaseHelper.getInstance(context);
+
+        PopupMenu popupMenu = new PopupMenu(context, holder.binding.getRoot());
+        popupMenu.inflate(R.menu.popup_menu);
+        popupMenu.setOnMenuItemClickListener(item -> {
+
+            switch (item.getItemId()){
+                case R.id.update:
+                    updateData(position);
+                    return true;
+
+                case R.id.delete:
+                    //to delete from database
+                    databaseHelper.getTaskDao().deleteTask(list.get(position).getId());
+                    //to remove from list
+                    list.remove(position);
+                    notifyDataSetChanged();
+                    return true;
+
+                case R.id.complete:
+                    Toast.makeText(context, "complete"+position, Toast.LENGTH_LONG).show();
+                    return true;
+                default:
+                    return false;
+            }
+        });
+        popupMenu.show();
+    }
+
+    private void updateData(int position) {
+        Navigation.findNavController((Activity) context, R.id.nav_controller).navigate(R.id.updateTaskFragment);
+        ((Activity) context).findViewById(R.id.topBar).setVisibility(View.GONE);
+        ((Activity) context).findViewById(R.id.navigationBar).setVisibility(View.GONE);
+    }
+
 }

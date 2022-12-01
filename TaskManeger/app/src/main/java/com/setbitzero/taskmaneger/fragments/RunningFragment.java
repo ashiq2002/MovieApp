@@ -16,55 +16,34 @@ import android.widget.Spinner;
 import com.setbitzero.taskmaneger.R;
 import com.setbitzero.taskmaneger.activities.MainActivity;
 import com.setbitzero.taskmaneger.adapter.CustomAdapter;
+import com.setbitzero.taskmaneger.database.DatabaseHelper;
 import com.setbitzero.taskmaneger.databinding.FragmentRunningBinding;
 import com.setbitzero.taskmaneger.databinding.ItemBinding;
+import com.setbitzero.taskmaneger.model.TaskModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RunningFragment extends Fragment {
    FragmentRunningBinding binding;
-   Spinner spinner;
-   ArrayList<String> action;
-
+   DatabaseHelper databaseHelper;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentRunningBinding.inflate(inflater, container, false);
+        databaseHelper = DatabaseHelper.getInstance(getContext());
 
-        binding.recycler.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
-        recView();
-
-        spinner = binding.getRoot().findViewById(R.id.itemAction);
-        action = new ArrayList<>();
-        action.add("Update");
-        action.add("Delete");
-        action.add("Complete");
+        binding.recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        CustomAdapter adapter = new CustomAdapter(getContext(), getRunningTask());
+        binding.recycler.setAdapter(adapter);
 
         return binding.getRoot();
     }
 
-    private void recView(){
-        ArrayList<String> list = new ArrayList<>();
-        list.add("Item 1");
-        list.add("Item 1");
-        list.add("Item 1");
-        list.add("Item 1");
-        list.add("Item 1");
-        list.add("Item 1");
-        list.add("Item 1");
-        list.add("Item 1");
-        list.add("Item 1");
-        list.add("Item 1");
-        list.add("Item 1");
-        list.add("Item 1");
-        list.add("Item 1");
-        list.add("Item 1");
-        list.add("Item 1");
-        list.add("Item 1");
-
-        CustomAdapter adapter = new CustomAdapter(getActivity(), list);
-        binding.recycler.setAdapter(adapter);
+    private List<TaskModel> getRunningTask(){
+        return databaseHelper.getTaskDao().getRunningTask();
     }
+
 }

@@ -33,4 +33,7 @@ public interface TaskDao {
     @Query("UPDATE task SET title = :title, description = :description," +
             " status = :status, start_time = :start_time, end_time = :end_time WHERE id = :id")
     void updateTask(int id, String title, String description, String status, String start_time, String end_time);
+
+    @Query("UPDATE task SET status = \"Complete\" WHERE id = :id")
+    void completeTask(int id);
 }

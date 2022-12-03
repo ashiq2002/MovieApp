@@ -68,5 +68,24 @@
         android:id="@+id/updateTaskFragment"
         android:name="com.setbitzero.taskmaneger.fragments.UpdateTaskFragment"
         android:label="fragment_update_task"
-        tools:layout="@layout/fragment_update_task" />
+        tools:layout="@layout/fragment_update_task" >
+        <action
+            android:id="@+id/action_updateTaskFragment_to_allListFragment"
+            app:destination="@id/allListFragment" />
+        <action
+            android:id="@+id/action_updateTaskFragment_to_runningFragment2"
+            app:destination="@id/runningFragment2" />
+        <action
+            android:id="@+id/action_updateTaskFragment_to_pendingFragment2"
+            app:destination="@id/pendingFragment2" />
+        <action
+            android:id="@+id/action_updateTaskFragment_to_pendingFragment22"
+            app:destination="@id/pendingFragment2" />
+        <action
+            android:id="@+id/action_updateTaskFragment_to_completeFragment"
+            app:destination="@id/completeFragment" />
+        <argument
+            android:name="taskModel"
+            app:argType="com.setbitzero.taskmaneger.model.TaskModel" />
+    </fragment>
 </navigation>

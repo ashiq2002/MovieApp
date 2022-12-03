@@ -19,5 +19,7 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="image_button">image button</string>
+    <string name="status">Status</string>
+    <string name="update_task">Update Task</string>
 
 </resources>

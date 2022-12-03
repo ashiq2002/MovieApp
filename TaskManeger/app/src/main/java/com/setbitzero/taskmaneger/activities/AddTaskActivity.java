@@ -4,15 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.setbitzero.taskmaneger.adapter.StatusAdapter;
 import com.setbitzero.taskmaneger.database.DatabaseHelper;
 import com.setbitzero.taskmaneger.databinding.ActivityAddTaskBinding;
+import com.setbitzero.taskmaneger.helper.DateTimeHelper;
 import com.setbitzero.taskmaneger.model.TaskModel;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AddTaskActivity extends AppCompatActivity {
@@ -28,10 +33,11 @@ public class AddTaskActivity extends AppCompatActivity {
 
         databaseHelper = DatabaseHelper.getInstance(getApplicationContext());
 
-        binding.taskStartTime.setOnClickListener(v->timeDialog(0, "Select Start Time"));
-        binding.taskEndTime.setOnClickListener(v-> timeDialog(1, "Select End Time"));
+        binding.taskStartTime.setOnClickListener(v->
+                DateTimeHelper.timeDialog(AddTaskActivity.this, 0, "Select Start Time", binding.taskStartTime));
+        binding.taskEndTime.setOnClickListener(v->
+                DateTimeHelper.timeDialog(AddTaskActivity.this, 1, "Select End Time", binding.taskEndTime));
         statusAdapter();
-
         insert();
     }
 
@@ -48,34 +54,6 @@ public class AddTaskActivity extends AppCompatActivity {
 //        datePicker.show();
 //    }
 
-    //show TimePickerDialog
-    @SuppressLint("SetTextI18n")
-    private void timeDialog(int key, String title){
-        Calendar currentTime = Calendar.getInstance();
-        int hour = currentTime.get(Calendar.HOUR_OF_DAY);
-        int minute = currentTime.get(Calendar.MINUTE);
-        TimePickerDialog mTimePicker;
-        mTimePicker = new TimePickerDialog(AddTaskActivity.this, (timePicker, selectedHour, selectedMinute) -> {
-
-            if(key == 0) binding.taskStartTime.setText(format12(selectedHour, selectedMinute));
-            else if(key == 1) binding.taskEndTime.setText(format12(selectedHour, selectedMinute));
-        }, hour, minute, false);
-        mTimePicker.setTitle(title);
-        mTimePicker.show();
-    }
-
-    //convert hour 24 to 12
-    @SuppressLint("DefaultLocale")
-    private String format12(int selectedHour, int selectedMinute){
-        String ampm = "AM";
-        if (selectedHour >= 12)
-            ampm = "PM";
-        selectedHour = selectedHour % 12;
-        if (selectedHour == 0)
-            selectedHour = 12;
-
-        return String.format("%d : %d %s", selectedHour, selectedMinute, ampm);
-    }
 
     //set status spinner adapter
     private void statusAdapter(){
@@ -107,7 +85,7 @@ public class AddTaskActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 status = parent.getItemAtPosition(position).toString();
                 if(!status.trim().isEmpty())
-                insertTask(status);
+                    insertTask(status);
             }
 
             @Override
@@ -118,7 +96,6 @@ public class AddTaskActivity extends AppCompatActivity {
 
     }
 
-
     //is edit text value null
     private boolean isNull(String[] item){
         return (item[0].trim().isEmpty()
@@ -126,6 +103,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 && item[2].trim().isEmpty()
                 && item[3].trim().isEmpty());
     }
+
 
     @Override
     public void onBackPressed() {

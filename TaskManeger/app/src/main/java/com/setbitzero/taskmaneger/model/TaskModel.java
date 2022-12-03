@@ -1,12 +1,15 @@
 package com.setbitzero.taskmaneger.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "task")
-public class TaskModel {
+public class TaskModel implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
@@ -42,6 +45,27 @@ public class TaskModel {
         this.startTime = startTime;
         this.endTime = endTime;
     }
+
+    protected TaskModel(Parcel in) {
+        id = in.readInt();
+        title = in.readString();
+        description = in.readString();
+        status = in.readString();
+        startTime = in.readString();
+        endTime = in.readString();
+    }
+
+    public static final Creator<TaskModel> CREATOR = new Creator<TaskModel>() {
+        @Override
+        public TaskModel createFromParcel(Parcel in) {
+            return new TaskModel(in);
+        }
+
+        @Override
+        public TaskModel[] newArray(int size) {
+            return new TaskModel[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -89,5 +113,20 @@ public class TaskModel {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeString(status);
+        dest.writeString(startTime);
+        dest.writeString(endTime);
     }
 }

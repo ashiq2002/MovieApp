@@ -1,32 +1,25 @@
 package com.setbitzero.taskmaneger.adapter;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
-import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
-import androidx.core.os.BundleKt;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.orhanobut.dialogplus.DialogPlus;
 import com.setbitzero.taskmaneger.R;
 import com.setbitzero.taskmaneger.database.DatabaseHelper;
 import com.setbitzero.taskmaneger.databinding.ItemBinding;
-import com.setbitzero.taskmaneger.fragments.UpdateTaskFragment;
+import com.setbitzero.taskmaneger.helper.DateTimeHelper;
 import com.setbitzero.taskmaneger.model.TaskModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder>{
@@ -88,7 +81,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
             switch (item.getItemId()){
                 case R.id.update:
-                    updateData(position);
+                    update(position);
                     return true;
 
                 case R.id.delete:
@@ -100,7 +93,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                     return true;
 
                 case R.id.complete:
-                    Toast.makeText(context, "complete"+position, Toast.LENGTH_LONG).show();
+                    databaseHelper.getTaskDao().completeTask(list.get(position).getId());
+                    list.remove(position);
+                    notifyItemRemoved(position);
                     return true;
                 default:
                     return false;
@@ -109,10 +104,49 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         popupMenu.show();
     }
 
-    private void updateData(int position) {
-        Navigation.findNavController((Activity) context, R.id.nav_controller).navigate(R.id.updateTaskFragment);
-        ((Activity) context).findViewById(R.id.topBar).setVisibility(View.GONE);
-        ((Activity) context).findViewById(R.id.navigationBar).setVisibility(View.GONE);
+    @SuppressLint("NotifyDataSetChanged")
+    private void update(int position){
+        TextInputEditText title, description, status;
+        EditText startTime, endTime;
+        MaterialButton updateButton;
+
+        DialogPlus dialogPlus = DialogPlus.newDialog(context)
+                .setContentHolder(new com.orhanobut.dialogplus.ViewHolder(R.layout.update_layout))
+                .setExpanded(true, 770)
+                .create();
+
+        View view = dialogPlus.getHolderView().getRootView();
+        title = view.findViewById(R.id.titleId);
+        description = view.findViewById(R.id.descriptionId);
+        status = view.findViewById(R.id.statusId);
+        startTime = view.findViewById(R.id.uStartTime);
+        endTime = view.findViewById(R.id.uEndTime);
+        updateButton = view.findViewById(R.id.updateData);
+
+        //set text
+        title.setText(list.get(position).getTitle());
+        description.setText(list.get(position).getDescription());
+        status.setText(list.get(position).getStatus());
+        startTime.setText(list.get(position).getStartTime());
+        endTime.setText(list.get(position).getEndTime());
+
+        dialogPlus.show();
+
+        //show time dialog
+        startTime.setOnClickListener(v->DateTimeHelper.timeDialog(view.getContext(), 0, "Select Start Time", startTime));
+        endTime.setOnClickListener(v->DateTimeHelper.timeDialog(view.getContext(), 1, "Select End Time", endTime));
+        updateButton.setOnClickListener(v->{ DatabaseHelper.getInstance(view.getContext())
+                .getTaskDao()
+                .updateTask(list.get(position).getId(),
+                        title.getText().toString(),
+                        description.getText().toString(),
+                        status.getText().toString(),
+                        startTime.getText().toString(),
+                        endTime.getText().toString());
+            dialogPlus.dismiss();
+        });
+        notifyDataSetChanged();
+
     }
 
 }

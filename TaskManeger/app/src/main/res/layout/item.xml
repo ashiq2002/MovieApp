@@ -98,7 +98,7 @@
                 android:id="@+id/currentDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="23 November, 2022"
+                android:text=""
                 android:textColor="#CCFFFFFF"
                 android:textSize="14sp"
                 android:layout_marginTop="15dp"

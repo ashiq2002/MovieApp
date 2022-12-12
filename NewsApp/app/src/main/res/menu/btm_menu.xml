@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeItem"
+        android:icon="@drawable/ic_home"
+        android:title="@string/home"/>
+
+    <item
+        android:id="@+id/scienceItem"
+        android:icon="@drawable/ic_architecture"
+        android:title="@string/science"/>
+
+    <item
+        android:id="@+id/sportsItem"
+        android:icon="@drawable/ic_sports"
+        android:title="@string/sports"/>
+
+    <item
+        android:id="@+id/technologyItem"
+        android:icon="@drawable/ic__computer"
+        android:title="@string/tech"/>
+
+
+</menu>

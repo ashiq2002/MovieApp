@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">NewsApp</string>
+    <string name="science">Science</string>
+    <string name="religion">Religion</string>
+    <string name="tech">Tech</string>
+    <string name="sports">Sports</string>
+    <string name="home">Home</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="news_image">news Image</string>
+    <string name="news_description">News Description</string>
+    <string name="news_title">News title</string>
+    <string name="news_source">News Source</string>
+
+    <!--keys-->
+    <string name="API_KEY">193de25160ca41709f6ae0d17291a1fd</string>
+    <string name="news_author">News Author</string>
+    <string name="published_at">Published At</string>
+    <string name="news_content">News Content</string>
+</resources>

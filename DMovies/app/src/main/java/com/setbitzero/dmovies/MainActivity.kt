@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity() {
 
             val query = binding.searchMovie.text.toString()
             sendQuery(query)
-            findNavController(R.id.nav_controller).navigate(R.id.navigation_search)
         }
     }
 
@@ -43,7 +42,8 @@ class MainActivity : AppCompatActivity() {
         val bundle = Bundle()
         bundle.putString("query", query)
         args.arguments = bundle
-        transaction.replace(R.id.mainContain, args).commit()
+        transaction.replace(R.id.main_activity_container, args).commit()
+        findNavController(R.id.nav_controller).navigate(R.id.navigation_search)
     }
 
 }

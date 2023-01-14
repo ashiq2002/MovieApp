@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.setbitzero.dmovies.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_detail"
+            app:destination="@id/navigation_detail" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_viewAll"
+            app:destination="@id/navigation_view_all" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_detail"
+        android:name="com.setbitzero.dmovies.ui.detail.MovieDetailsFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_movie_detail" >
+        <argument
+            android:name="MovieResult"
+            app:argType="com.setbitzero.dmovies.model.Result" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.setbitzero.dmovies.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/navigation_view_all"
+        android:name="com.setbitzero.dmovies.ui.view_all.ViewAllMovieFragment"
+        android:label="fragment_search_result"
+        tools:layout="@layout/fragment_view_all_movie" >
+        <action
+            android:id="@+id/action_navigation_view_all_to_navigation_detail"
+            app:destination="@id/navigation_detail" />
+        <argument
+            android:name="Movies"
+            app:argType="com.setbitzero.dmovies.util.Movie" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.setbitzero.dmovies.ui.search.SearchResultFragment"
+        android:label="fragment_search_result"
+        tools:layout="@layout/fragment_search_result" >
+    </fragment>
+</navigation>

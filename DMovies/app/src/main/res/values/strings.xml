@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">DMovies</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="notification">notification</string>
+    <string name="movie_poster">Movie poster</string>
+    <string name="popular_movies">Popular Movies</string>
+    <string name="view_all">View all</string>
+    <string name="top_movies">Top Movies</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="upcoming_movies">Upcoming Movies</string>
+    <string name="mv_title">Star Wars: The Rise of Skywalker</string>
+    <string name="du_date_type">2019 | 2h 35min | Fantasy, Sci-fi</string>
+    <string name="storyline">StoryLine</string>
+    <string name="dummy_text">Puss in Boots discovers that his passion for adventure has taken its toll: He has burned through eight of his nine lives, leaving him with only one life left. Puss sets out on an epic journey to find the mythical Last Wish and restore his nine lives.</string>
+    <string name="go_to_home">Go To Home</string>
+    <string name="poster_image">poster image</string>
+    <string name="previous">Previous</string>
+    <string name="search_response">Search Response!</string>
+</resources>
